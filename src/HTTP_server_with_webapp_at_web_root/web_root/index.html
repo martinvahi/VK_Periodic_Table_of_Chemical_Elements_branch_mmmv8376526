@@ -1,0 +1,38 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="keywords" content="periodic table, interactive periodic table, perioodilisustabel, perioodilisussüsteem, chemical elements, keemilised elemendid, Mendelejevi tabel, Mendeleev's table, chemistry, keemia">
+<link href="common.css" rel="stylesheet" type="text/css">
+<link href="table.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="hotkeys.js"></script>
+<script type="text/javascript" src="general.js"></script>
+<script type="text/javascript" src="dialogs.js"></script>
+<script type="text/javascript" src="app.js"></script>
+<script type="text/javascript" src="lang/english.js"></script>
+<script type="text/javascript" src="lang/eesti.js"></script>
+<script type="text/javascript" src="elements.js"></script>
+<script type="text/javascript" src="layouts.js"></script>
+<script type="text/javascript" src="data.js"></script>
+<script type="text/javascript" src="groups.js"></script>
+<title>Periodic Table of Chemical Elements</title></head>
+<body onLoad="App.init()">
+<noscript>
+<p><font size="+3">This program is based on Javascript which is either disabled or unsupported by your web browser. Either enable Javascript or <a href="http://www.webdevelopersnotes.com/design/browsers_list.php3">upgrade</a> your web browser.</font></p>
+<p><font size="+3">See programm p&otilde;hineb Javascriptil kuid Teie veebilehitseja ei toeta seda. Veenduge, et Javascript oleks lubatud või <a href="http://www.webdevelopersnotes.com/design/browsers_list.php3">uuendage</a> oma veebilehitsejat.</font></p>
+</noscript>
+<div>
+	<div id="title" onClick="$('#tools').toggle();">
+		<div id="apptitle"></div>
+		<!--<div id="layoutname"></div>-->
+	</div>
+</div>
+<div id="tools">
+   <div id="toolbar"></div>
+   <div id="language"></div>
+</div>
+<div id="pertable"></div>
+<p><span id="author"></span>: <a href="http://kodu.ut.ee/~kiisk/" target="_blank">Valter Kiisk</a>. <span id="version"></span>&nbsp;2016-02-27. <span id="download"></span></p>
+</body>
+</html>

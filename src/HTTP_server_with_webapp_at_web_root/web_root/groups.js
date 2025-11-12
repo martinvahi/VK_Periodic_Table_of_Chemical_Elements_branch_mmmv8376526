@@ -1,0 +1,137 @@
+"use strict";
+
+var Groups = (function(){
+	var all = [];
+	var selected = [];
+	var currentIndex = -1;
+	var dlg = null;
+	var list;
+	var inany;
+
+	function infoClick() {
+		var name = this.getObj();
+		Message(name + "info", name).showAt(this);
+	}
+	
+	function clearClick() {
+		list.clearSelection();	
+		update();
+	}
+	
+	function itemClick() {
+		var listitem = this;
+		var group = listitem.getObj();
+		if (listitem.isChecked() && group.param) {
+			var promptDlg = Prompt(T[group.param.prompt], T[group.param.name], group.param.value);
+			promptDlg.showModalAt(this, function(result){
+				if (result == "cancel") {
+					listitem.setChecked(false);
+					return;
+				}
+				
+				var value = parseFloat(promptDlg.getValue());
+				if ( Number.isNaN(value) ) {
+					listitem.setChecked(false);
+					return;
+				}
+				
+				group.param.value = value;
+				update();
+			});
+		}
+		else
+			update();
+	}
+	
+	function update() {
+		selected = [];
+		var items = list.getItems();
+		for (var k = 0; k < items.length; k++)
+			if ( items[k].isChecked() )
+				selected.push( items[k].getObj() );
+		
+		Groups.selectedContain = (inany.isChecked() ? matchAny : matchAll);
+		Pertab.updateColors();
+	}
+
+	function Group(key, data, options) {
+		this.key = key;
+		if (Function.isFunction(data)) {
+			this.contains = data;
+			if (options && options.param)
+				this.param = options.param;
+		} else if (data.length != Symbols.length) //data is list of atomic numbers
+			this.contains = function(i) { return data.indexOf(i + 1) != -1; };
+		else
+			this.contains = function(i) { return data[i] != 0; };
+	}
+	
+	Group.prototype.isSelected = function() {
+		return selected.indexOf(this) >= 0;
+	}
+	
+	function matchAny(i) {
+		for (var k = 0; k < selected.length; k++)
+			if ( selected[k].contains(i) )
+				return true;
+		
+		return false;
+	}
+	
+	function matchAll(i) {
+		for (var k = 0; k < selected.length; k++)
+			if ( !(selected[k].contains(i)) )
+				return false;
+		
+		return true;
+	}
+	
+	return {
+		isSelected: function() {
+			return selected.length > 0;
+		},
+		
+		clearSelection: clearClick,
+		
+		add: function(name, data, options) {
+			var group = new Group(name, data, options);
+			all.push( group );
+			return group;
+		},
+		
+		allGroupsFor: function(index) {
+			var arr = [];
+			for (var i = 0; i < all.length; i++)
+				if ( all[i].contains(index) )
+					arr.push(T[all[i].key].toLowerCase());
+			return arr;
+		},
+		
+		getDlg: function() {
+			if (dlg == null){
+				dlg = Dialogs.create();
+				dlg.setWidth("25em");
+				dlg.setInit(function() {
+					this.setTitle(T.groups).addFoot( [Button(T.clear, clearClick), HideBtn()] ).addIcon( HideIcon() );
+					list = CheckList(true).setScroll("10em");
+					for (var i = 0; i < all.length; i++) {
+						var group = all[i];
+						list.add(T[group.key], group).setChecked(group.isSelected()).onClick(itemClick);
+						if ( App.hasContent(group.key + "info") )
+							list.getLast().append( InfoIcon(infoClick).setObj(group.key) );
+					}
+				
+					var markType = RadioList().margTop("6px").onItemClick(update);
+					inany = markType.add(T.inanygroup);
+					markType.add(T.ineachgroup);
+					markType.setSelected(inany);
+					this.addContent( [list, markType] );
+				});
+			}
+		
+			return dlg;
+		}
+	};
+})();
+
+

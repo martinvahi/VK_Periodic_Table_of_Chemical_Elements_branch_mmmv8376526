@@ -1,0 +1,5 @@
+The copy of the Kibuvits Ruby Library(KRL) in this folder has been
+crippled to reduce the data volume of the project that uses the
+KRL. Please download full source of the KRL from elsewhere. 
+Thank You.
+
