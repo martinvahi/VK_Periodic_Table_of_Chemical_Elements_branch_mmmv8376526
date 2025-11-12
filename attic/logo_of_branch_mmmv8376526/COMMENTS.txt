@@ -3,12 +3,13 @@ The core development file, the
 
     ./logo_development_version.svg
 
-has been created with Inkscape. The colors of the logo are
-transparent and blue(#0044ff). The png and jpeg files have
-been created from the
+has been created with Inkscape. The colors of the logo are transparent
+and blue(#0044ff). The png and jpeg files have been created from the
 
     ./logo_of_mmmv8376526.svg
 
-by using GIMP.
-
+by using GIMP. The logo is in public domain from
+my(Martin.Vahi@softf1.com) point of view, but there has been NO checks
+to find out, whether it matches with any trademarks or logos that were
+created before this logo was created.
 
